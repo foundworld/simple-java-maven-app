@@ -12,4 +12,12 @@ pipeline {
             }
         }
     }
+    stages {
+        stage('SonarQube analysis') {
+            def scannerHome = tool 'SonarQube Scanner 2.8';
+            withSonarQubeEnv('SonarQubeServer') {
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
+        }
+    }
 }
