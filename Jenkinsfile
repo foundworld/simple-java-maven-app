@@ -11,8 +11,6 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
-    }
-    stages {
         stage('SonarQube analysis') {
             def scannerHome = tool name:'SonarQube Scanner';
             withSonarQubeEnv('SonarQubeServer') {
