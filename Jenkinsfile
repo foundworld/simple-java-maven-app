@@ -12,9 +12,8 @@ pipeline {
             }
         }
         stage('SonarQube analysis') {
-            def scannerHome = tool name:'SonarQube Scanner';
             withSonarQubeEnv('SonarQubeServer') {
-                sh "${scannerHome}/bin/sonar-scanner"
+                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
             }
         }
     }
