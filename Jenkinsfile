@@ -6,7 +6,10 @@ pipeline {
         }
     }
     stages {
-        def pl
+        environment {
+            def pl
+        }
+        
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
