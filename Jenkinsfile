@@ -11,8 +11,8 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
                 git branch: 'master', url: 'ssh://git@github.com:foundworld/shared-jenkins-scripts.git'
                 
-                pl = sh label:'common groovy', script: 'shared-jenkins-scripts/src/main/groovy/common.groovy'
-                pl.gitclean()
+                sh label:'common groovy', script: 'shared-jenkins-scripts/src/main/groovy/common.groovy'
+                sh label:'direct command', script: 'git reset --hard'
             }
         }
         stage('SonarQube analysis') {
