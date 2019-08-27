@@ -5,18 +5,13 @@ pipeline {
             args '-v /root/.m2:/root/.m2' 
         }
     }
-    stages {
-        environment {
-            def pl
-        }
-        
+    stages {        
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
-                dir('shared-jenkins-scripts') {
-                    git url: 'ssh://git@github.com:foundworld/shared-jenkins-scripts.git'
-                }
-                pl = load('shared-jenkins-scripts/src/main/groovy/common.groovy')
+                git branch: 'master', url: 'ssh://git@github.com:foundworld/shared-jenkins-scripts.git'
+                
+                pl = sh label:'common groovy', script: 'shared-jenkins-scripts/src/main/groovy/common.groovy'
                 pl.gitclean()
             }
         }
