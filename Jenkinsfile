@@ -5,8 +5,8 @@ pipeline {
             args '-v /root/.m2:/root/.m2' 
         }
     }
-    def pl
     stages {
+        def pl
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
