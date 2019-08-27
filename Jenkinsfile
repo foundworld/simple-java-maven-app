@@ -5,10 +5,16 @@ pipeline {
             args '-v /root/.m2:/root/.m2' 
         }
     }
+    def pl
     stages {
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
+                dir('shared-jenkins-scripts') {
+                    git url: 'ssh://git@github.com:foundworld/shared-jenkins-scripts.git'
+                }
+                pl = load('shared-jenkins-scripts/src/main/groovy/common.groovy')
+                pl.gitclean()
             }
         }
         stage('SonarQube analysis') {
