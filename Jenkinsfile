@@ -8,11 +8,12 @@ pipeline {
     stages {        
         stage('Build') { 
             steps {
-                sh 'mvn -B -DskipTests clean package' 
                 git branch: 'master', url: 'ssh://git@github.com:foundworld/shared-jenkins-scripts.git'
                 
                 sh label:'common groovy', script: 'shared-jenkins-scripts/src/main/groovy/common.groovy'
                 sh label:'direct command', script: 'git reset --hard'
+                
+                sh 'mvn -B -DskipTests clean package' 
             }
         }
         stage('SonarQube analysis') {
