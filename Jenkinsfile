@@ -10,11 +10,9 @@ node {
         pipeline.gitclean()
         withDockerContainer(args: '-v /root/.m2:/root/.m2', image: 'maven:3-alpine') {
             sh label: 'mvn build', script: 'mvn -B -DskipTests clean package'
-        }
-    }
-    stage('SonarQube analysis') {
-        withSonarQubeEnv('SonarQubeServer') {
-            sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+            withSonarQubeEnv('SonarQubeServer') {
+                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+            }
         }
     }
 }
